@@ -7,7 +7,15 @@
 [![LoC](https://tokei.rs/b1/github/CosmWasm/wasmd)](https://github.com/CosmWasm/wasmd)
 <!-- [![GolangCI](https://golangci.com/badges/github.com/CosmWasm/wasmd.svg)](https://golangci.com/r/github.com/CosmWasm/wasmd) -->
 
-This repository hosts `aquad`, a juno based app-chain zone with wasm smart contracts enabled.
+This repository hosts `aquad`, a **Juno based app-chain zone** with permissionless cosmwasm smart contracts enabled, providing a test-playground for developers, to use the ICA controller go module, paired with uni-3 testnet on Juno ( enabled ICA Host module ). 
+
+> This will be the first alpha-testnet app chain connected to the Juno Multiverse, also (draft) called WasmHub. 
+InterChain Security will use the validator set of Juno, to ensure rapid development interation. 
+
+## ICA/ICS Interoperability with Juno("WasmHub") as a ICA Host enabled chain
+
+aqua1contracts and addresses will be able to interact with daodao.zone V1 contracts, 
+as well as all other contracts or multisignatures on juno, straight from aquarium-1 testnet.
 
 This code was forked from the `cosmwasm/wasmd` repository as a basis and then we added `x/wasm` and cleaned up 
 many gaia-specific files. However, the `aquad` binary should function just like `wasmd` except for the
