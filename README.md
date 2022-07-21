@@ -1,4 +1,4 @@
-# Wasm Zone
+# AQUARUM-1 Testnet
 
 [![CircleCI](https://circleci.com/gh/CosmWasm/wasmd/tree/master.svg?style=shield)](https://circleci.com/gh/CosmWasm/wasmd/tree/master)
 [![codecov](https://codecov.io/gh/cosmwasm/wasmd/branch/master/graph/badge.svg)](https://codecov.io/gh/cosmwasm/wasmd)
@@ -7,10 +7,10 @@
 [![LoC](https://tokei.rs/b1/github/CosmWasm/wasmd)](https://github.com/CosmWasm/wasmd)
 <!-- [![GolangCI](https://golangci.com/badges/github.com/CosmWasm/wasmd.svg)](https://golangci.com/r/github.com/CosmWasm/wasmd) -->
 
-This repository hosts `Wasmd`, the first implementation of a cosmos zone with wasm smart contracts enabled.
+This repository hosts `aquad`, a juno based app-chain zone with wasm smart contracts enabled.
 
-This code was forked from the `cosmos/gaia` repository as a basis and then we added `x/wasm` and cleaned up 
-many gaia-specific files. However, the `wasmd` binary should function just like `gaiad` except for the
+This code was forked from the `cosmwasm/wasmd` repository as a basis and then we added `x/wasm` and cleaned up 
+many gaia-specific files. However, the `aquad` binary should function just like `wasmd` except for the
 addition of the `x/wasm` module.
 
 **Note**: Requires [Go 1.17+](https://golang.org/dl/)
@@ -129,20 +129,22 @@ This is just designed for local testing/CI - do not use these scripts in product
 Very likely you will assign tokens to accounts whose mnemonics are public on github.
 
 ```sh
-docker volume rm -f wasmd_data
+docker volume rm -f aquad_data
 
 # pass password (one time) as env variable for setup, so we don't need to keep typing it
 # add some addresses that you have private keys for (locally) to give them genesis funds
 docker run --rm -it \
     -e PASSWORD=xxxxxxxxx \
-    --mount type=volume,source=wasmd_data,target=/root \
-    cosmwasm/wasmd:latest /opt/setup_wasmd.sh cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6
+    --mount type=volume,source=aquad_data,target=/root \
+    cosmwasm/wasmd:latest /opt/setup_aquad.sh cosmos1pkptre7fdkl6gfrzlesjjvhxhlc3r4gmmk8rs6
 
-# This will start both wasmd and rest-server, both are logged
+# This will start both aquad and rest-server, both are logged
 docker run --rm -it -p 26657:26657 -p 26656:26656 -p 1317:1317 \
-    --mount type=volume,source=wasmd_data,target=/root \
-    cosmwasm/wasmd:latest /opt/run_wasmd.sh
+    --mount type=volume,source=aquad_data,target=/root \
+    cosmwasm/wasmd:latest /opt/run_aquad.sh
 ```
+
+### TODO ****
 
 ### CI
 
@@ -181,19 +183,19 @@ to the configuration.
 
 Available flags:
  
-* `-X github.com/CosmWasm/wasmd/app.NodeDir=.corald` - set the config/data directory for the node (default `~/.wasmd`)
-* `-X github.com/CosmWasm/wasmd/app.Bech32Prefix=coral` - set the bech32 prefix for all accounts (default `wasm`)
-* `-X github.com/CosmWasm/wasmd/app.ProposalsEnabled=true` - enable all x/wasm governance proposals (default `false`)
-* `-X github.com/CosmWasm/wasmd/app.EnableSpecificProposals=MigrateContract,UpdateAdmin,ClearAdmin` - 
+* `-X github.com/AquaOnJuno/aquarium/app.NodeDir=.aquad` - set the config/data directory for the node (default `~/.aquad`)
+* `-X github.com/AquaOnJuno/aquarium/app.Bech32Prefix=aqua` - set the bech32 prefix for all accounts (default `wasm`)
+* `-X github.com/AquaOnJuno/aquarium/app.ProposalsEnabled=true` - enable all x/wasm governance proposals (default `false`)
+* `-X github.com/AquaOnJuno/aquarium/app.EnableSpecificProposals=MigrateContract,UpdateAdmin,ClearAdmin` - 
     enable a subset of the x/wasm governance proposal types (overrides `ProposalsEnabled`)
 
 Examples:
 
-* [`wasmd`](./Makefile#L50-L55) is a generic, permissionless version using the `cosmos` bech32 prefix
+* [`aquad`](./Makefile#L50-L55) is a generic, permissionless version using the `cosmos` bech32 prefix
 
 ## Compile Time Parameters
 
-Besides those above variables (meant for custom wasmd compilation), there are a few more variables which
+Besides those above variables (meant for custom aquad compilation), there are a few more variables which
 we allow blockchains to customize, but at compile time. If you build your own chain and import `x/wasm`,
 you can adjust a few items via module parameters, but a few others did not fit in that, as they need to be
 used by stateless `ValidateBasic()`. Thus, we made them public `var` and these can be overridden in the `app.go`
