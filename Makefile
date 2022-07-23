@@ -55,7 +55,7 @@ build_tags_comma_sep := $(subst $(empty),$(comma),$(build_tags))
 
 # process linker flags
 
-ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=wasm \
+ldflags = -X github.com/cosmos/cosmos-sdk/version.Name=aqua \
 		  -X github.com/cosmos/cosmos-sdk/version.AppName=aquad \
 		  -X github.com/cosmos/cosmos-sdk/version.Version=$(VERSION) \
 		  -X github.com/cosmos/cosmos-sdk/version.Commit=$(COMMIT) \
@@ -121,7 +121,7 @@ distclean: clean
 ### Testing
 
 
-test: test-unit draw-deps
+test: test-unit 
 test-all: check test-race test-cover
 
 test-unit:
